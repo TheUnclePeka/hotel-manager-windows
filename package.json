@@ -1,0 +1,84 @@
+{
+  "name": "@hotel-manager/windows",
+  "productName": "Hotel Manager",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Hotel Manager \u0432\u0402\u201d windows",
+  "author": "HotelManager",
+  "main": "dist-electron/main.cjs",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "npm run build && electron .",
+    "dev": "node scripts/build.mjs && cross-env HOTEL_MANAGER_DEV_URL=http://localhost:5173 electron .",
+    "dist": "node scripts/build.mjs && electron-builder --win --x64 --publish never",
+    "test": "node --test tests/*.test.mjs",
+    "notices": "node scripts/third-party.mjs"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "cross-env": "^10.0.0",
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3",
+    "esbuild": "^0.28.2",
+    "png-to-ico": "^3.0.2"
+  },
+  "build": {
+    "appId": "org.hotelmanager.desktop",
+    "productName": "Hotel Manager",
+    "artifactName": "HotelManager-Setup-${version}.${ext}",
+    "directories": {
+      "output": "release",
+      "buildResources": "resources"
+    },
+    "files": [
+      "dist-electron/**/*",
+      "ui/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "resources/icon.ico",
+        "to": "icon.ico"
+      },
+      {
+        "from": "resources/icon.png",
+        "to": "icon.png"
+      },
+      {
+        "from": "resources/tray.png",
+        "to": "tray.png"
+      },
+      {
+        "from": "resources/tray@1.5x.png",
+        "to": "tray@1.5x.png"
+      },
+      {
+        "from": "resources/tray@2x.png",
+        "to": "tray@2x.png"
+      },
+      {
+        "from": "THIRD_PARTY_NOTICES.txt",
+        "to": "THIRD_PARTY_NOTICES.txt"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "resources/icon.ico",
+      "executableName": "HotelManager"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "Hotel Manager",
+      "uninstallDisplayName": "Hotel Manager"
+    },
+    "electronVersion": "44.5.1"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@hotel-manager/ui": "file:vendor/hotel-manager-ui-0.2.0.tgz"
+  },
+  "type": "module"
+}
